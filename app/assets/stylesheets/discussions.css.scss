@@ -2,9 +2,14 @@
 @import "settings";
 @import "mixins";
 
-/** discussion new (new loomio) modal*/
+/** discussion new form */
 body.discussions.new {
   .helper-text.align-with-input { margin-top: 20px }
+}
+
+/** discussion index form */
+#discussion-list {
+  margin-bottom: 10px;
 }
 
 /** discussion show form*/
@@ -93,8 +98,6 @@ body.discussions.show {
   }
 
   .header-text {
-  //   color: $mid-grey;
-  //   font-weight: bold;
     line-height: 2.0em;
   }
 
@@ -149,7 +152,8 @@ li s hard.motion-preview {
     text-decoration: none;
   }
 }
-  /* Markdown styling */
+
+/* Markdown styling */
 
 .comment-body li{
   font-size: 14px; /* should prob use a $var here eh? */
@@ -351,6 +355,11 @@ pre{
 // NOTE: this code is shared with the group show page and
 //       the dashboard page.
 //
+.discussion-preview.unread {
+  background-color: $highlighted;
+  a { color: #333; }
+  a .proposal-title { color: black; }
+}
 
 .group-activity-indicator {
   margin: 0 0 0 -6px;

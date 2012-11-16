@@ -65,6 +65,8 @@
   }
 }
 
+//** emails **/
+
 #group_email_subject {
   width: 510px;
 }
@@ -72,6 +74,7 @@
   width: 510px;
 }
 
+//** group new/edit page **/
 
 #group-form {
   form {
@@ -148,6 +151,8 @@ body.groups.show {
   .dropdown li a:hover { color: white; }
 }
 
+//*** panels ***/
+
 /*group panel*/
 .sub-panel#groups{
   ul {
@@ -164,6 +169,7 @@ body.groups.show {
   }
   margin-bottom: 10px;
 }
+
 /* description panel */
 .sub-panel#group-description-panel {
   #description-edit-form {
@@ -189,13 +195,6 @@ body.groups.show {
 }
 #add-member-popup-btn {
   margin-bottom: 5px;
-}
-
-/* sub groups panel */
-#sub-groups {
-  .group-link a:hover {
-    color: $dark-grey;
-  }
 }
 
 /* membership request panel */
@@ -250,7 +249,6 @@ input#user_email{
 
 .user-name { 
   float: left;
-  a:hover { color: $dark-grey; }
 }
 
 .membership-count {

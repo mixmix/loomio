@@ -1,10 +1,9 @@
 @import "settings";
 @import "bootstrap";
 @import "mixins";
-// TODO: // * define site color variables
-// * mixin for gradient
 
 // CSS reset - does this exist elsewhere?
+
 ul, ol, li {
   margin: 0;
   padding: 0;
@@ -22,6 +21,36 @@ body {
 hr {
   margin: 1px;
 }
+form {
+  label {
+    font-size: $font-small;
+    color: $dark-grey;
+    margin-bottom: 4px;
+  }
+  input, select, textarea {
+    font-size: $font-small;
+    height: auto;
+    width: 370px;
+    margin-bottom: 15px;
+    display: block;
+  }
+  textarea {
+    height: 200px;
+  }
+  /* this is a little mess that needs to be resolved*/
+  input[type="checkbox"] {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: inline;
+  }
+  .checkbox input{
+    margin-top: 0px;
+  }
+  .checkbox-label {
+    margin-left: 5px;
+    display: inline;
+  }
+}
 
 .group-title h2 {
   color: #777;
@@ -29,29 +58,18 @@ hr {
   a { color: $header-link-color; }
 }
 
-.font-size-85pc{
-  font-size: 85%;
-}
+.sub-panel a { color: $mid-grey; }
+.sub-panel a:hover { color: $dark-grey }
 
 // structural elements (containers etc.)
+
+.popover { z-index: 10000; }
+.main-content { margin-top: 20px; }
 .page-container { margin-top: 30px; }
 .group-link.clearfix {
   .group-link-name { float: left; }
   .group-link-activity { float: right; }
   .button-icon { padding: 0 }
-}
-.popover { z-index: 10000; }
-
-.sub_group {font-size: $font-tiny;}
-
-// #start-new-discussion { margin: 0 0 20px 2px; }
-.main-content { margin-top: 20px; }
-#discussion-list {
-  margin-bottom: 10px;
-}
-
-#new_discussion .control-label {
-  display: block;
 }
 .see-more {
   font-size: $font-small;
@@ -59,11 +77,14 @@ hr {
   bottom: 10px;
   display: block;
 }
-.model-description { padding-bottom: 10px; }
+
+//** code shared over multiple pages **/
+
 .description-body {
   color: $dark-grey;
   margin-bottom: 10px;
 }
+
 #description-edit-form {
   margin-bottom: 0px;
   #description-input {
@@ -87,46 +108,15 @@ hr {
   }
 }
 
-li.empty-list-message {
-  padding: 5px 0px;
-}
 .discussion-with-motion-divider { border-bottom: 2px solid $light-grey; }
 
 #show-closed-motions {
   margin-bottom: 10px;
 }
 
-#closed-motions-page .selector-list { padding-bottom: 20px; }
-#closed-motions-page li.selector-item.loading { background-position: 270px 160px; }
-#closed-motions {
-  width: 750px;
-  margin-left: -375px;
-  min-height: 550px;
-}
 
-/**** Structural elements ****/
-ul.selector-list.bordered { border-top: 1px solid $light-grey }
-li.selector-item {
-  background-color: $unhighlighted;
-  color: $dark-grey;
-  font-weight: normal;
-  border-bottom: 1px solid $light-grey;
-}
-.discussion-preview.unread {
-  background-color: $highlighted;
-  a { color: #333; }
-  a .proposal-title { color: black; }
+//** pagination */
 
-}
-li.selector-item a.selector-link {
-  display: block;
-  padding: 5px 5px 5px 15px;
-}
-li.selector-item a.selector-link:hover {
-  background-color: $selector;
-  text-decoration: none;
-  .group-activity-indicator.unread-group-activity { background-color: $group-activity; }
-}
 .pagination {
   a {
     color: $mid-grey;
@@ -158,14 +148,35 @@ li.selector-item a.selector-link:hover {
   background-position: 16px 10px;
 }
 
-.alert {
-  margin: 10px 0;
-  // position: relative;
-  // top: 0px;
-  // bottom: 20px;
+//** selector list object **/
+
+ul.selector-list.bordered { border-top: 1px solid $light-grey }
+li.selector-item {
+  background-color: $unhighlighted;
+  color: $dark-grey;
+  font-weight: normal;
+  border-bottom: 1px solid $light-grey;
+}
+
+li.selector-item a.selector-link {
+  display: block;
+  padding: 5px 5px 5px 15px;
+}
+li.selector-item a.selector-link:hover {
+  background-color: $selector;
+  text-decoration: none;
+  .group-activity-indicator.unread-group-activity { background-color: $group-activity; }
 }
 
 // misc (move stuff out of here..)
+
+.alert { margin: 10px 0; }
+
+.model-description { padding-bottom: 10px; }
+
+li.empty-list-message {
+  padding: 5px 0px;
+}
 
 .helper-text p {
   color: $mid-grey;
@@ -219,47 +230,6 @@ li.selector-item a.selector-link:hover {
   font-size: $font-small;
 }
 
-//*** color coded urgency labels ***
-.color-urgent { background-color: #CA3232; }
-.color-warning { background-color: #F89406; }
-.color-ok { background: #016B01; }
-
-form {
-  label {
-		font-size: $font-small;
-    color: $dark-grey;
-    margin-bottom: 4px;
-  }
-
-  input, select, textarea {
-		font-size: $font-small;
-		height: auto;
-    width: 370px;
-    margin-bottom: 15px;
-    display: block;
-  }
-
-  textarea {
-    height: 200px;
-  }
-
-  /* this is a little mess that needs to be resolved*/
-  input[type="checkbox"] {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    display: inline;
-  }
-
-  .checkbox input{
-    margin-top: 0px;
-  }
-
-  .checkbox-label {
-    margin-left: 5px;
-    display: inline;
-  }
-}
-
 .hidden {
   display: none;
 }
@@ -275,6 +245,7 @@ form {
 }
 
 /* Markdown (Global so it's not specific to just Comments etc) */
+
 code{
   padding: 1px 4px;
   overflow: auto;
@@ -292,8 +263,9 @@ code{
     clear:both;
 }
 
+/* The following styles prevent unbroken strings from breaking the layout */
+
 .word-break {
-  /* The following styles prevent unbroken strings from breaking the layout */
   overflow: auto;
   white-space: -moz-pre-wrap; /* Mozilla */
   white-space: -hp-pre-wrap; /* HP printers */
@@ -342,57 +314,8 @@ code{
   font-size: 1.2em;
 }
 
-
-ul.loomio-process-flow {
-  height: 100px;
-  margin: 0 auto 20px auto;
-  border: 1px solid $light-grey;
-  @include border-radius(8px);
-  /*box-shadow: 2px 2px 2px $light-grey;*/
-  background-color: white;
-  text-align: center;
-  padding: 0;
-  li.process-flow-item {
-    float: left;
-    padding: 0 72px;
-  }
-  li.process-flow-item .process-flow-icon {
-    background-repeat: no-repeat;
-    margin: 20px auto 0 auto;
-    height: 40px;
-    width: 40px;
-  }
-  li.process-flow-item#start { padding: 0 48px; }
-  li.process-flow-item#start .process-flow-icon {
-    background-image:url('/assets/loomio-40.png');
-    width: 107px;
-  }
-  li.process-flow-item#enguage .process-flow-icon {
-    background-image:url('/assets/discussion-40.png');
-    opacity: 0.6;
-  }
-  li.process-flow-item#decide .process-flow-icon {
-    background-image:url('/assets/pie-40.png');
-  }
-  li.process-flow-item#act .process-flow-icon {
-    background-image:url('/assets/action.png');
-  }
-  li.process-flow-item h1 {
-    line-height: 1em;
-    font-size: 1.6em;
-    color: $mid-grey;
-  }
-  li.process-flow-arrow {
-    display: inline-block;
-    float: left;
-    background-image:url('/assets/process-flow-arrow.png');
-    background-repeat: no-repeat;
-    height: 100px;
-    width: 32px;
-  }
-}
-
 /*** helper bot ***/
+
 #helper_bot {
   float: right;
   position: relative;
@@ -409,7 +332,14 @@ body.groups.show #helper_bot{
   right: 130px;
 }
 
+//*** color coded urgency labels ***
+
+.color-urgent { background-color: #CA3232; }
+.color-warning { background-color: #F89406; }
+.color-ok { background: #016B01; }
+
 /**** buttons ****/
+
 .btn-app {
   line-height: 18px;
   padding: 4px 8px 4px 8px;
@@ -422,6 +352,7 @@ body.groups.show #helper_bot{
 a.btn-icon:hover { color: $dark-grey; }
 
 /**** icons ****/
+
 .button-icon{
   display: inline-block;
   background-repeat: no-repeat;
@@ -447,18 +378,7 @@ a.btn-icon:hover { color: $dark-grey; }
   background-image:url('/assets/dot-18.png');
   float: right;
 }
-// .button-icon.topic-icon {
-//   background-image:url('/assets/topic-18.png');
-// }
-// .button-icon.member-icon {
-//   background-image:url('/assets/member-18.png');
-// }
-// .button-icon.group-icon {
-//   background-image:url('/assets/group-18.png');
-// }
-// .button-icon.pie-icon {
-//   background-image:url('/assets/pie-18.png');
-// }
+
 .large-icon.topic-icon {
     background-image:url('/assets/topic-24.png');
 }
