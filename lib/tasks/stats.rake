@@ -1,5 +1,5 @@
 namespace :stats do
-  task :groups => :environment do    # Export all public groups
+  task :groups => :environment do    # Export all groups, scramble details of private ones
     require 'csv'
     CSV.open("tmp/groups.csv", "w") do |csv|
       csv << ["id", "name", "created_at", "viewable_by", "parent_id", "description", "memberships_count", "archived_at"]
@@ -9,6 +9,16 @@ namespace :stats do
         else
           csv << [Digest::MD5.hexdigest(group.id.to_s), "Private", group.created_at, group.viewable_by, group.parent_id, "Private", group.memberships_count, group.archived_at]
         end
+      end
+    end
+  end
+
+  task :users => :environment do   # Export all users' create dates
+    require 'csv'
+    CSV.open("tmp/users.csv", "w") do |csv|
+      csv << ["id", "created_at"]
+      User.all.each do |user|
+        csv << [Digest::MD5.hexdigest(user.id.to_s), user.created_at]
       end
     end
   end
