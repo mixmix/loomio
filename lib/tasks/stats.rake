@@ -16,9 +16,9 @@ namespace :stats do
   task :users => :environment do   # Export all users' create dates
     require 'csv'
     CSV.open("tmp/users.csv", "w") do |csv|
-      csv << ["id", "created_at"]
+      csv << ["id", "created_at", "memberships_count"]
       User.all.each do |user|
-        csv << [Digest::MD5.hexdigest(user.id.to_s), user.created_at]
+        csv << [Digest::MD5.hexdigest(user.id.to_s), user.created_at, user.memberships_count]
       end
     end
   end
