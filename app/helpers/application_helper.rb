@@ -54,15 +54,17 @@ module ApplicationHelper
       text = " "
     end
     
-    options = [
-      :no_intra_emphasis => true,
-      :tables => true,
-      :fenced_code_blocks => true,
-      :autolink => true,
-      :strikethrough => true,
-      :space_after_headers => true,
-      :superscript => true
-    ]
+    if options==nil
+      options = [
+        :no_intra_emphasis => true,
+        :tables => true,
+        :fenced_code_blocks => true,
+        :autolink => true,
+        :strikethrough => true,
+        :space_after_headers => true,
+        :superscript => true
+      ]
+    end
 
     renderer = MarkdownRenderer.new(
       :filter_html => true,
@@ -73,12 +75,30 @@ module ApplicationHelper
     markdown.render(text).html_safe
   end
 
-  def conditional_markdown(truefalse, text, options=nil)
-    if truefalse
-      markdown(text, options)
-    else
-      text
+  def conditional_markdown(md_boolean, text, options=nil)
+    if text == nil #there's gotta be a better way to do this? text=" " in args wasn't working
+      text = " "
     end
+
+    if md_boolean
+      options = [
+        :no_intra_emphasis => true,
+        :tables => true,
+        :fenced_code_blocks => true,
+        :autolink => true,
+        :strikethrough => true,
+        :space_after_headers => true,
+        :superscript => true
+      ]
+
+      renderer = MarkdownRenderer.new
+      markdown = Redcarpet::Markdown.new(renderer, *options)
+      markdown.render(text).html_safe
+    else
+      simple_format(auto_link_urls(text))     
+    end
+
+
   end
 
   def help_text_dismissed?
