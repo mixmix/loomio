@@ -42,7 +42,6 @@ Then /^markdown should now be off by default$/ do
 end
 
 Then /^there should be an anchor for the comment$/ do
-  debugger
   page.should have_css("#comment-#{@comment.id}")
 end
 
