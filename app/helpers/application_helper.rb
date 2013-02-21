@@ -54,22 +54,17 @@ module ApplicationHelper
       text = " "
     end
     
-    if options==nil
-      options = [
-        :no_intra_emphasis => true,
-        :tables => true,
-        :fenced_code_blocks => true,
-        :autolink => true,
-        :strikethrough => true,
-        :space_after_headers => true,
-        :superscript => true
-      ]
-    end
+    options = [
+      :no_intra_emphasis => true,
+      :tables => true,
+      :fenced_code_blocks => true,
+      :autolink => true,
+      :strikethrough => true,
+      :space_after_headers => true,
+      :superscript => true
+    ]
 
-    renderer = MarkdownRenderer.new(
-      :filter_html => true,
-      :hard_wrap => true
-    )
+    renderer = MarkdownRenderer.new
     
     markdown = Redcarpet::Markdown.new(renderer, *options)
     markdown.render(text).html_safe
