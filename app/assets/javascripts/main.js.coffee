@@ -203,7 +203,8 @@ $ ->
 
 # Edit description
 Application.enableInlineEdition = ()->
-  if $("body.groups.show").length > 0 || $("body.discussions.show").length > 0
+  # if $("body.groups.show").length > 0 || $("body.discussions.show").length > 0
+  if $("body.discussions.show").length > 0
     $(".edit-description").click((event) ->
       container = $(this).parents(".description-container")
       description_height = container.find(".model-description").height()
