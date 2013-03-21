@@ -1,3 +1,5 @@
+window.Discussion ||= {}
+
 # Set placeholders
 $ ->
   if $("body.discussions.new").length > 0
@@ -49,3 +51,44 @@ updateMarkdownSetting = (selected, usesMarkdown) ->
   $(selected).children().first().children().addClass('icon-ok')
   $("#markdown-settings-form").submit()
   event.preventDefault()
+
+# Edit description
+Discussion.enableInlineEdition = ()->
+  if $("body.discussions.show").length > 0
+    $(".edit-description").click((event) ->
+      container = $(this).parents(".description-container")
+      description_height = container.find(".model-description").height()
+      container.find(".description-body").toggle()
+      container.find("#description-edit-form").toggle()
+      if description_height > 90
+        container.find('#description-input').height(description_height)
+      event.preventDefault()
+    )
+    $(".edit-discussion-description").click (event)->
+      $(".discussion-description-helper-text").toggle()
+      $(".discussion-additional-info").toggle()
+      event.preventDefault()
+    $("#cancel-add-description").click((event) ->
+      $("#description-edit-form").toggle()
+      $(".description-body").toggle()
+      $(".discussion-description-helper-text").toggle()
+      $(".discussion-additional-info").toggle()
+      event.preventDefault()
+    )
+
+Discussion.seeMoreDescription = () ->
+  #expand/shrink description text
+  if $("body.discussions.show").length > 0
+    $(".see-more").click((event) ->
+      $(this).parent().children(".short-description").toggle()
+      $(this).parent().children(".long-description").toggle()
+      if $(this).html() == "Show More"
+        $(this).html("Show Less")
+      else
+        $(this).html("Show More")
+      event.preventDefault()
+    )
+
+$ ->
+  Discussion.enableInlineEdition()
+  Discussion.seeMoreDescription()
