@@ -78,6 +78,7 @@ group :development do
   gem 'guard'
   gem 'guard-spork'
   gem 'guard-rspec'
+  gem 'guard-livereload'
   gem 'rb-inotify', :require => false
   gem 'rb-fsevent', :require => false
   gem 'rb-fchange', :require => false
