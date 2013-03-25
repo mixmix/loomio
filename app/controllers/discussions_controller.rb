@@ -10,6 +10,7 @@ class DiscussionsController < GroupBaseController
 
   def new
     @discussion = Discussion.new
+    @uses_markdown = current_user.uses_markdown
     if params[:group_id]
       @discussion.group_id = params[:group_id]
     else
@@ -19,6 +20,7 @@ class DiscussionsController < GroupBaseController
 
   def create
     @discussion = current_user.authored_discussions.new(params[:discussion])
+    @discussion.uses_markdown = current_user.uses_markdown
     authorize! :create, @discussion
     if @discussion.save
       flash[:success] = "Discussion sucessfully created."
