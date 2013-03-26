@@ -50,12 +50,21 @@ Given /^my global markdown preference is 'disabled'$/ do
 end
 
 When /^I see discussion markdown is disabled$/ do
-  page.should have_css('.markdown-off')
+  find('#discussion-markdown-dropdown').should have_css('.markdown-off')
+end
+
+When /^I see discussion markdown is enabled$/ do
+  find('#discussion-markdown-dropdown').should have_css('.markdown-on')
 end
 
 When /^I enable markdown for the discussion description$/ do
   click_on 'discussion-markdown-dropdown-link'
   find('#discussion-markdown-dropdown .enable-markdown').click
+end
+
+When /^I disable markdown for the discussion description$/ do
+  click_on 'discussion-markdown-dropdown-link'
+  find('#discussion-markdown-dropdown .disable-markdown').click
 end
 
 Then /^the discussion desription should render markdown$/ do

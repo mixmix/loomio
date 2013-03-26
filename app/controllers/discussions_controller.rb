@@ -20,7 +20,7 @@ class DiscussionsController < GroupBaseController
 
   def create
     @discussion = current_user.authored_discussions.new(params[:discussion])
-    @discussion.uses_markdown = current_user.uses_markdown
+    @discussion.clone_markdown_setting(current_user)
     authorize! :create, @discussion
     if @discussion.save
       flash[:success] = "Discussion sucessfully created."
@@ -101,7 +101,7 @@ class DiscussionsController < GroupBaseController
 
   def edit_description
     @discussion = Discussion.find(params[:id])
-    @discussion.set_description!(params[:description], current_user)
+    @discussion.set_description!(params[:description], params[:description_uses_markdown], current_user)
     @last_collaborator = User.find @discussion.originator.to_i
     respond_to do |format|
       format.js { render :action => 'update_version' }
@@ -143,6 +143,11 @@ class DiscussionsController < GroupBaseController
     respond_to do |format|
       format.js
     end
+  end
+
+  def clone_markdown_setting(user)
+    self.uses_markdown = user.uses_markdown?
+    save!
   end
 
   private

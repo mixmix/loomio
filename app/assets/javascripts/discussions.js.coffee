@@ -35,21 +35,21 @@ $ ->
         ), "json"
 
 
-# Markdown (new discussion & comments)
+# Global Markdown (new discussion & comments)
 $ ->
   if $("body.discussions.show").length > 0 || $("body.discussions.new").length > 0
-    $(".enable-markdown").click((event) ->
+    $(".global-markdown-setting .enable-markdown").click((event) ->
       updateMarkdownSetting(this, true)
     )
 $ ->
   if $("body.discussions.show").length > 0 || $("body.discussions.new").length > 0
-    $(".disable-markdown").click((event) ->
+    $(".global-markdown-setting .disable-markdown").click((event) ->
       updateMarkdownSetting(this, false)
     )
 
 updateMarkdownSetting = (selected, usesMarkdown) ->
   $("#global_uses_markdown").val(usesMarkdown)
-  $('.markdown-setting-dropdown').find('.icon-ok').removeClass('icon-ok')
+  $('.global-markdown-setting .markdown-setting-dropdown').find('.icon-ok').removeClass('icon-ok')
   $(selected).children().first().children().addClass('icon-ok')
   $("#markdown-setting-global-form").submit()
   event.preventDefault()
@@ -75,6 +75,25 @@ Discussion.enableInlineEdition = ()->
       $(".description-body").toggle()
       $(".discussion-description-helper-text").toggle()
       $(".discussion-additional-info").toggle()
+      event.preventDefault()
+    )
+
+     #description markdown setting
+    $(".local-markdown-setting .enable-markdown").click((event) ->
+      $('#description-markdown-setting').val(true)
+      $('#discussion-markdown-dropdown-link').html('<img alt="Markdown_on" class="markdown-icon markdown-on" src="/assets/markdown_on.png">
+')
+      $('.local-markdown-setting .markdown-setting-dropdown').find('.icon-ok').removeClass('icon-ok')
+      $(this).children().first().children().addClass('icon-ok')
+      event.preventDefault()
+    )
+
+    $(".local-markdown-setting .disable-markdown").click((event) ->
+      $('#description-markdown-setting').val(false)
+      $('#discussion-markdown-dropdown-link').html('<img alt="Markdown_off" class="markdown-icon markdown-off" src="/assets/markdown_off.png">
+')
+      $('.local-markdown-setting .markdown-setting-dropdown').find('.icon-ok').removeClass('icon-ok')
+      $(this).children().first().children().addClass('icon-ok')
       event.preventDefault()
     )
 

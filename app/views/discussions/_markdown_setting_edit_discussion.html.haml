@@ -11,6 +11,3 @@
   %li
     %a{href: 'https://www.loomio.org/discussions/1124'}
       More info...
-= form_tag set_markdown_user_path(current_user.id), remote: true, id: 'markdown-settings-form' do
-  = hidden_field_tag 'id', current_user.id
-  = hidden_field_tag 'uses_markdown', @uses_markdown, {id: 'uses_markdown'}
