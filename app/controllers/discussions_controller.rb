@@ -145,10 +145,10 @@ class DiscussionsController < GroupBaseController
     end
   end
 
-  def clone_markdown_setting(user)
-    self.uses_markdown = user.uses_markdown?
-    save!
-  end
+  # def clone_markdown_setting(target)
+  #   self.uses_markdown = target.uses_markdown?
+  #   save!
+  # end
 
   private
 

@@ -5,6 +5,12 @@
 /** discussion new (new loomio) modal*/
 body.discussions.new {
   .helper-text.align-with-input { margin-top: 20px }
+
+  #discussion-markdown-dropdown {
+    float: right;
+    margin-top: 10px;
+  }
+
 }
 
 /** discussion show form*/
@@ -77,6 +83,10 @@ body.discussions.show {
     min-height: 40px;
     border-bottom: 1px solid $light-grey;
     padding: 10px 0px 10px 50px;
+
+    #discussion-markdown-dropdown {
+      margin-top: 10px;
+    }
   }
 
   .right-context {
@@ -203,6 +213,11 @@ pre{
 
 /*** comments, positions & proposals in History ***/
 #comment-markdown-dropdown li i {
+  display: inline-block;
+  width: 15px;
+}
+
+#discussion-markdown-dropdown li i {
   display: inline-block;
   width: 15px;
 }

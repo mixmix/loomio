@@ -148,6 +148,11 @@ class Discussion < ActiveRecord::Base
     fire_edit_description_event(user)
   end
 
+  def clone_markdown_setting(target)
+    self.uses_markdown = target.uses_markdown?
+    save!
+  end
+
   def set_title!(title, user)
     self.title = title
     save!

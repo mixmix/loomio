@@ -2,7 +2,7 @@
   - group = GroupDecorator.decorate(@discussion.group) if @discussion.group
   = render '/groups/title', group: group
   = render "/discussions/form", :discussion => @discussion, :user_groups => @user_groups
-  .dropdown#discussion-markdown-dropdown.global-markdown-setting
-    %a.dropdown-toggle{href:'#discussion-markdown-dropdown', id:'discussion-markdown-dropdown-link', 'data-toggle'=> 'dropdown'}
-      = markdown_img(@uses_markdown)
-    = render 'markdown_setting_global'
+  / .dropdown#discussion-markdown-dropdown.global-markdown-setting
+  /   %a.dropdown-toggle{href:'#discussion-markdown-dropdown', id:'discussion-markdown-dropdown-link', 'data-toggle'=> 'dropdown'}
+  /     = markdown_img(@uses_markdown)
+  /   = render 'markdown_setting_global'
