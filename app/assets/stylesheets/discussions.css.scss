@@ -8,9 +8,17 @@ body.discussions.new {
 
   #discussion-markdown-dropdown {
     float: right;
-    margin-top: 10px;
+    margin-top: 14px;
   }
 
+  #discussion-submit {
+    position: relative;
+    float: left;
+  }
+
+    .markdown-setting-dropdown {
+    margin-top: -14px;
+  }
 }
 
 /** discussion show form*/

@@ -143,7 +143,6 @@ class Discussion < ActiveRecord::Base
   def set_description!(description, uses_markdown, user)
     self.description = description
     self.uses_markdown = uses_markdown
-    # self.update_attributes(uses_markdown: uses_markdown)
     save!
     fire_edit_description_event(user)
   end

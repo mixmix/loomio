@@ -78,24 +78,24 @@ Discussion.enableInlineEdition = ()->
       event.preventDefault()
     )
 
-     #description markdown setting
+     #edit description markdown setting
     $(".local-markdown-setting .enable-markdown").click((event) ->
-      $('#description-markdown-setting').val(true)
-      $('#discussion-markdown-dropdown-link').html('<img alt="Markdown_on" class="markdown-icon markdown-on" src="/assets/markdown_on.png">
-')
-      $('.local-markdown-setting .markdown-setting-dropdown').find('.icon-ok').removeClass('icon-ok')
-      $(this).children().first().children().addClass('icon-ok')
-      event.preventDefault()
+      img_to_replace = $('#discussion-markdown-dropdown-link')
+      img_to_replace.html('<img alt="Markdown_on" class="markdown-icon markdown-on" src="/assets/markdown_on.png">')
+      editMarkdownSetting(this, true)
     )
 
     $(".local-markdown-setting .disable-markdown").click((event) ->
-      $('#description-markdown-setting').val(false)
-      $('#discussion-markdown-dropdown-link').html('<img alt="Markdown_off" class="markdown-icon markdown-off" src="/assets/markdown_off.png">
-')
-      $('.local-markdown-setting .markdown-setting-dropdown').find('.icon-ok').removeClass('icon-ok')
-      $(this).children().first().children().addClass('icon-ok')
-      event.preventDefault()
+      img_to_replace = $('#discussion-markdown-dropdown-link')
+      img_to_replace.html('<img alt="Markdown_off" class="markdown-icon markdown-off" src="/assets/markdown_off.png">')
+      editMarkdownSetting(this, false)
     )
+
+    editMarkdownSetting = (selected, usesMarkdown) ->
+      $('#description-markdown-setting').val(usesMarkdown)
+      $('.local-markdown-setting .markdown-setting-dropdown').find('.icon-ok').removeClass('icon-ok')
+      $(selected).children().first().children().addClass('icon-ok')
+      event.preventDefault()
 
 Discussion.seeMoreDescription = () ->
   #expand/shrink description text

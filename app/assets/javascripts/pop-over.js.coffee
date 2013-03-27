@@ -30,6 +30,6 @@ $ ->
     title: "Text formatting settings and info."
 
 $ ->
-  $("#discussion-markdown-dropdown").tooltip
+  $("#discussion-markdown-dropdown-link").tooltip
     placement: "left",
     title: "Text formatting settings and info."

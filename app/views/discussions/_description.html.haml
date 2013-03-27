@@ -31,8 +31,4 @@
         .dropdown#discussion-markdown-dropdown.local-markdown-setting
           %a.dropdown-toggle{href:'#discussion-markdown-dropdown', id:'discussion-markdown-dropdown-link', 'data-toggle'=> 'dropdown'}
             = markdown_img(description_markdown_setting)
-          = render 'markdown_setting_edit_discussion'
-      / .dropdown#discussion-markdown-dropdown.local-markdown-setting
-      /   %a.dropdown-toggle{href:'#discussion-markdown-dropdown', id:'discussion-markdown-dropdown-link', 'data-toggle'=> 'dropdown'}
-      /     = markdown_img(description_markdown_setting)
-      /   = render 'markdown_setting_edit_discussion'
+          = render 'markdown_setting_edit_discussion', discussion: discussion

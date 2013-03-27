@@ -96,7 +96,7 @@ describe UsersController do
       user.stub(:save!)
     end
     after do
-      xhr :post, :set_markdown, :current_user => 1, :id => 1, :uses_markdown => "true"
+      xhr :post, :set_markdown, :current_user => 1, :id => 1, :global_uses_markdown => "true"
     end
     it "updates the uses_markdown attribute in the model" do
       user.should_receive(:uses_markdown=).with "true"
