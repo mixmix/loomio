@@ -9,19 +9,31 @@ ActiveAdmin.register GroupRequest do
   index do
     column :id
     column :name
-    column :description
-    column "Can Contribute", :sortable => :cannot_contribute do |group_request|
-      !group_request.cannot_contribute
+    column "Description", :description do |group_request|
+      div style: "width: 250px" do
+        group_request.description
+      end
+    end
+
+    column "$", :sortable => :cannot_contribute do |group_request|
+      can_contribute=!group_request.cannot_contribute
+      if can_contribute
+        div style: "color: Red" do
+          can_contribute
+        end
+      else
+        can_contribute
+      end
     end
     column :expected_size
-    column :max_size
+    column "Max", :max_size
     column :admin_email
     column "Approve" do |group_request|
       link = ""
       unless group_request.approved? or group_request.accepted?
         link += link_to "Approve",
                approve_admin_group_request_path(group_request.id),
-               :method => :put, :id => "approve_group_request_#{group_request.id}"
+               :method => :put, :id => "approve_group_request_#{group_request.id}", style: "color: LimeGreen"
       end
       if group_request.awaiting_approval? or group_request.marked_as_spam?
         link += " | "
@@ -34,10 +46,10 @@ ActiveAdmin.register GroupRequest do
         link += link_to "Already Approved",
                mark_as_manually_approved_admin_group_request_path(group_request.id),
                :method => :put, :id => "approve_group_request_#{group_request.id}"
-        link += " | "
+        link += ' | '
         link += link_to "Mark as Spam",
                mark_as_spam_admin_group_request_path(group_request.id),
-               :method => :put, :id => "mark_as_spam_group_request_#{group_request.id}"
+               :method => :put, :id => "mark_as_spam_group_request_#{group_request.id}", style: "color: Orange"
       end
       link.html_safe
     end
