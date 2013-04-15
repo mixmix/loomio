@@ -68,8 +68,8 @@ Loomio::Application.configure do
       :address        => 'smtp.sendgrid.net',
       :port           => '587',
       :authentication => :plain,
-      :user_name      => ENV['SENDGRID_USERNAME'],
-      :password       => ENV['SENDGRID_PASSWORD'],
+      :user_name      => 'app12763474@heroku.com', #ENV['SENDGRID_USERNAME'],
+      :password       => 'qsh4dh9x', #ENV['SENDGRID_PASSWORD'],
       :domain         => 'loomio.org'
     }
   else
@@ -78,7 +78,7 @@ Loomio::Application.configure do
 
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = {
-    :host => 'loomio-staging.herokuapp.com',
+    :host => 'johnsloomiotest.herokuapp.com', #loomio-staging.herokuapp.com',
   }
 
   # Store avatars on Amazon S3
