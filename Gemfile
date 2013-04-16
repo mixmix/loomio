@@ -49,6 +49,7 @@ gem 'coffee-rails', '~> 3.2.2'
 gem 'piwik_analytics', '~> 1.0.1'
 gem 'fog'
 gem 'rack-mini-profiler', '~> 0.1.23'
+gem 'roadie', '~> 2.3.4'
 
 # Gems used only for assets and not required
 # in production environments by default.

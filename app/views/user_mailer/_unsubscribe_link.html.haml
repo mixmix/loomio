@@ -1,3 +1,4 @@
 %hr
 
-%p=link_to('Unsubscribe or change your email preferences', email_preferences_url(unsubscribe_token: @user.unsubscribe_token))
+%p.unsubscribe
+  =link_to('Unsubscribe or change your email preferences', email_preferences_url(unsubscribe_token: @user.unsubscribe_token))
