@@ -1,13 +1,54 @@
-
-
-.comment {
+body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 18px;
+}
+
+ p {
+    word-wrap: break-word;
+    margin-bottom: 9px;
+    font-size: 14px;
+  }
+
+a {
+  color: #0088cc;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6, h7{
+  display: block;
+  padding: 4px 0px;
+}
+h1{
+  font-size: 1.4em;
+}
+h2{
+  font-size: 1.3em;
+}
+h3{
+  font-size: 1.2em;
+}
+h4{
+  font-size: 1.1em;
+}
+h5{
+  font-size: 1.0em;
+}
+hr{
+  margin: 1em;
+}
+
+.comment {
+  font-size: 14px;
+  color: #555555;
+  padding-left: 25px;
   width: 500px;
-  padding-left: 16px;
 }
 
 .unsubscribe {
-  font-size: 14px;
+  font-size: 12px;
+  a {
+    text-decoration: underline;
+    color: #555555;
+  }
 }

@@ -71,7 +71,10 @@ Loomio::Application.configure do
       :user_name      => 'app12763474@heroku.com', #ENV['SENDGRID_USERNAME'],
       :password       => 'qsh4dh9x', #ENV['SENDGRID_PASSWORD'],
       :domain         => 'loomio.org'
+
+      #enable_starttls_auto: true
     }
+    config.action_mailer.perform_deliveries = true
   else
     config.action_mailer.delivery_method = :test
   end

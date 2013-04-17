@@ -34,8 +34,8 @@ namespace :email_test do
     end
 
     class FakeComment
-      attr_accessor :author, :discussion, :group, :body, :uses_markdown
-      def initialize(author, discussion, group, body, uses_markdown=true)
+      attr_accessor :author, :discussion, :group, :body, :uses_markdown, :id
+      def initialize(author, discussion, group, body, uses_markdown=true, id=333)
         @author = author
         @discussion = discussion
         @group = group
@@ -48,13 +48,11 @@ namespace :email_test do
     @mentioner = FakeUser.new('Fake User One', 'not@gmail.com', true)
     @group = FakeGroup.new(2, "Group #{time_stamp}")
     @discussion = FakeDiscussion.new('Should we support local stores or import?')
-    @comment_body = "# hey @jojopinks \r\n \r\nhave you see www.stuff.co.nz ? Foreman <a href=\"www.maliciouscode.com\" style=\"font-color:red\">can</a> help manage multiple processes that your Rails app depends upon when running in development. It also provides an export command to move them into production. it's objectively the *best* for:\r\n \r\n- news \r\n- __stuff__ \r\n- things\r\n \r\n---\r\n \r\n## the `code` test section: \r\n \r\n```\r\nquestion = 'does it work'\r\nputs \" \#{question} ?\"\r\n```\r\n\r\n### also\r\n\r\nmy favourite comic:\r\n[![](http://imgs.xkcd.com/comics/substitute.png)](http://imgs.xkcd.com/comics/substitute.png)"
+    @comment_body = "have you see www.stuff.co.nz ? Foreman <a href=\"www.maliciouscode.com\" style=\"font-color:red\">can</a> help manage multiple processes that your Rails app depends upon when running in development. @johnirving would like this. It also provides an export command to move them into production. it's objectively the *best* for:\r\n \r\n- news \r\n- __stuff__ \r\n- things\r\n \r\n---\r\n \r\n## the `code` test section: \r\n \r\n```\r\nquestion = 'does it work'\r\nputs \" \#{question} ?\"\r\n```\r\n\r\n### also\r\n\r\nmy favourite comic:\r\n[![](http://i.imgur.com/oLzk6ay.png)](http://i.imgur.com/oLzk6ay.png)"
     @comment = FakeComment.new(@mentioner, @discussion, @group, @comment_body, true)
 
 
-    addresses = [ 'whimful@gmail.com', 'john.irving@enspiral.com' ]
-
-
+    addresses = [ 'john.irving@enspiral.com', 'loomio.test.account@outlook.com', 'loomio.testaccount@yahoo.com', 'loomio.testaccount@loomio.org' ]
 
     mailer_methods = {
     :user_mentioned_with_markdown => lambda do |email|
