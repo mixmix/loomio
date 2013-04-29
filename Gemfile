@@ -62,7 +62,7 @@ end
 group :development, :test do
   gem 'thin', '~> 1.4.1'
   gem 'debugger', '~> 1.2.2'
-  gem 'factory_girl_rails', '~> 4.0'
+  gem 'factory_girl_rails', '~> 4.2.1'
   gem 'faker', '~> 1.0.1'
   gem 'rspec-rails', '~> 2.12.2'
   gem 'shoulda-matchers', '~> 1.2.0'

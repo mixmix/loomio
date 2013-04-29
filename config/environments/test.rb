@@ -24,10 +24,37 @@ Loomio::Application.configure do
   # Disable request forgery protection in test environment
   config.action_controller.allow_forgery_protection    = false
 
-  # Tell Action Mailer not to deliver emails to the real world.
-  # The :test delivery method accumulates sent emails in the
-  # ActionMailer::Base.deliveries array.
-  config.action_mailer.delivery_method = :test
+  if ENV['ENABLE_TEST_EMAILS'] == true
+    # Send emails using SendGrid
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      # :address => "localhost", :port => 1025,
+      :address        => 'smtp.sendgrid.net',
+      :port           => '587',
+      :authentication => :plain,
+      :user_name      => 'app12763474@heroku.com', #ENV['SENDGRID_USERNAME'],
+      :password       => 'qsh4dh9x', #ENV['SENDGRID_PASSWORD'],
+      :domain         => 'loomio.org'
+
+      #enable_starttls_auto: true
+    }
+    config.action_mailer.default_url_options = {
+      :host => 'johnsloomiotest.herokuapp.com', #loomio-staging.herokuapp.com',
+    }
+    config.action_mailer.perform_deliveries = true
+
+  elsif ENV['ENABLE_TEST_EMAILS'] == 'mailcatcher'
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      :address => "localhost", :port => 1025
+    }
+    config.action_mailer.default_url_options = {
+      :host => 'johnsloomiotest.herokuapp.com', #loomio-staging.herokuapp.com',
+    }
+    config.action_mailer.perform_deliveries = true
+  else
+    config.action_mailer.delivery_method = :test
+  end
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,
