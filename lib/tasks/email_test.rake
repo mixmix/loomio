@@ -1,10 +1,18 @@
 include ERB::Util
-# require 'rspec/mocks/standalone'
+require 'spec_helper'
 
 require 'faker'
 
 # require 'factory_girl_rails'
 # FactoryGirl.find_definitions
+describe "Email formatting" do
+  it "email_test:discussion:new_discussion_created" do
+    let(:user) { stub_model User }
+
+  end
+
+end
+
 
 class FakeThing
   def make_attrs
@@ -118,6 +126,7 @@ namespace :email_test do
   #   puts 'RAKE ABORTED!'
   #   puts 'only run this command in staging ENV.'
   #   puts 'run RAILS_ENV=test ENABLE_TEST_EMAILS=true rake email_test:MAILER_NAME'
+   # RAILS_ENV=test TEST_EMAIL=mailcatcher rails runner lib/tasks/email_test.rb
   #   next
   # end
 

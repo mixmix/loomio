@@ -24,7 +24,7 @@ Loomio::Application.configure do
   # Disable request forgery protection in test environment
   config.action_controller.allow_forgery_protection    = false
 
-  if ENV['ENABLE_TEST_EMAILS'] == true
+  if ENV['TEST_EMAIL'] == 'sendgrid'
     # Send emails using SendGrid
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
@@ -43,7 +43,7 @@ Loomio::Application.configure do
     }
     config.action_mailer.perform_deliveries = true
 
-  elsif ENV['ENABLE_TEST_EMAILS'] == 'mailcatcher'
+  elsif ENV['TEST_EMAIL'] == 'mailcatcher'
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
       :address => "localhost", :port => 1025
