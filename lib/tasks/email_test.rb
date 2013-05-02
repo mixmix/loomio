@@ -1,4 +1,5 @@
 # RAILS_ENV=test TEST_EMAIL=mailcatcher rails runner lib/tasks/email_test.rb
+# RAILS_ENV=test TEST_EMAIL=sendgrid rails runner lib/tasks/email_test.rb
 
 include ERB::Util
 require 'spec_helper'
@@ -9,8 +10,8 @@ def create_user
       name:               Faker::Name.name,
       email:              Faker::Internet.email,
       uses_markdown:      true,
-      unsubscribe_token:  ('a'..'z').to_a.sample(20).join,
-      invitation_token:   ('a'..'z').to_a.sample(20).join,
+      unsubscribe_token:  (('a'..'z').to_a+('0'..'9').to_a).sample(20).join,
+      invitation_token:   (('a'..'z').to_a+('0'..'9').to_a).sample(20).join,
       groups:             []
 end
 
@@ -51,8 +52,6 @@ def create_motion(in_discussion)
       author:             author,
       close_date:         Time.now+rand(300).minutes,
       votes_for_graph:    [["Yes (1)", 1, "Yes", [["himful@gmail.com"]]], ["Abstain (0)", 0, "Abstain", [[]]], ["No (0)", 0, "No", [[]]], ["Block (1)", 1, "Block", [["bob@lick.com"]]]],
-      # unique_votes:       [create_vote]*rand(2..11),
-      # rand(2..11).times {@unique_votes << FakeVote.new }
       percent_voted:      50,
       group_count:        22,
       no_vote_count:      11
@@ -61,7 +60,6 @@ end
 def create_vote
   stub_model Vote,
       user:               user,
-      # motion:             in_motion,
       user_name:          Faker::Name.name,
       position_to_s:      ['agreed', 'abstained', 'disagreed', 'blocked'].sample,
       statement:          Faker::Lorem.paragraph(rand(1..3))
@@ -69,7 +67,7 @@ end
 
 
 describe "Test Email:" do
-  let (:addresses) { ['john.irving@enspiral.com'] }#, 'loomio.test.account@outlook.com', 'loomio.testaccount@yahoo.com', 'loomio.testaccount@loomio.org'] }
+  let (:addresses) { ['loomio.test.account@outlook.com'] }#, 'loomio.testaccount@yahoo.com', 'loomio.testaccount@loomio.org'] }
 
 	let(:user) { create_user }
   let(:author) { create_user }
