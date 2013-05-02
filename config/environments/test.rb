@@ -39,17 +39,19 @@ Loomio::Application.configure do
       #enable_starttls_auto: true
     }
     config.action_mailer.default_url_options = {
-      :host => 'johnsloomiotest.herokuapp.com', #loomio-staging.herokuapp.com',
+      :host           => 'johnsloomiotest.herokuapp.com', #looimo-staging.herokuapp.com',
     }
     config.action_mailer.perform_deliveries = true
 
   elsif ENV['TEST_EMAIL'] == 'mailcatcher'
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-      :address => "localhost", :port => 1025
+      :address        => 'localhost',
+      :port           => 1025,
+      :domain         => 'loomio.org'
     }
     config.action_mailer.default_url_options = {
-      :host => 'johnsloomiotest.herokuapp.com', #loomio-staging.herokuapp.com',
+      :host           => 'loomio.org'
     }
     config.action_mailer.perform_deliveries = true
   else
@@ -64,7 +66,7 @@ Loomio::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  # config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {

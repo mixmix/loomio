@@ -16,7 +16,7 @@ class UserMailer < ActionMailer::Base
   def mentioned(user, comment)
     @user = user
     @comment = comment
-    @rendered_comment_body = render_rich_text(comment.uses_markdown, comment.body)
+    @rendered_comment_body = render_rich_text(comment.body, comment.uses_markdown)
     @discussion = comment.discussion
     mail to: @user.email,
          subject: "#{comment.author.name} mentioned you in the #{comment.group.name} group on Loomio"
