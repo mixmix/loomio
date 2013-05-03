@@ -22,8 +22,9 @@ def create_group
       admins:             [admin],
       admin_email:        admin.email,
       discussions:        [],
+      discussions_count:  0,
       motions:            [],
-      parent:             nil
+      motions_count:      0
 end
 
 def create_discussion(in_group)
@@ -62,7 +63,7 @@ def create_vote
       user:               user,
       user_name:          Faker::Name.name,
       position_to_s:      ['agreed', 'abstained', 'disagreed', 'blocked'].sample,
-      statement:          Faker::Lorem.paragraph(rand(1..3))
+      statement:          Faker::Lorem.paragraph(rand(0..2))
 end
 
 
@@ -162,17 +163,6 @@ describe "Test Email:" do
   end
 
   describe "Motion Mailer:" do
-    # before do
-    #   unique_votes = []
-    #   rand(2..11).times do |i|
-    #     a_vote = mock_model Vote,
-    #       name:           Faker::Name.name,
-    #       position_to_s:  ['agreed', 'abstained', 'disagreed', 'blocked'].sample,
-    #       statement:      Faker::Lorem.paragraph(rand(1..3))
-    #     unique_votes << a_vote
-    #   end
-    # end
-
     it "new_motion_created" do
       puts ' '
       puts 'NEW_MOTION_CREATED'
@@ -221,44 +211,52 @@ describe "Test Email:" do
 
   describe "User Mailer:" do
   ####  SKIP: this mailer is complicated
-    # it "daily_activity" do
-    #   puts ' '
-    #   puts 'DAILY_ACTIVITY'
+    it "daily_activity" do
+      puts ' '
+      puts 'DAILY_ACTIVITY'
 
-    #   @activity = {}
-    #   #create some groups
-    #   rand(3..6).times { user.groups << create_group }
-    #   user.groups.each do |group_i| #for each group
-    #     h = {}
+      @activity = {}
+      #create some groups
+      user_groups = []
+      rand(3..6).times { user_groups << create_group }
+      user.stub groups: user_groups
 
-    #     #create some discussions
-    #     rand(0..3).times { group_i.discussions << create_discussion(group_i) }
-    #     group_i.discussions.each do |discussion_j| #for each of these discussions
-    #       #create some comments
-    #       rand(0..3).times { discussion_j.comments << create_comment(discussion_j) }
-    #       #create some motions
-    #       if rand(0..1) == 1
-    #         motion_to_add = create_motion(discussion_j)
+      user.groups.each do |group_i|
+        h = {}
 
-    #         discussion_j.motions << motion_to_add
-    #         group_i.motions << motion_to_add   #try .append
-    #       else
-    #       end
-    #     end
+        #create some discussions
+        discussions = []
+        (2..rand(5)).each do |k|
+          a_discussion = create_discussion(group)
+          #create some comments in that discussion
+          rand(0..3).times do |l|
+            a_comment = create_comment(a_discussion)
+            a_discussion.comments << a_comment
+          end
+          discussions << a_discussion
+        end
+        h[:discussions] = discussions
 
-    #     h[:discussions] = group_i.discussions
-    #     h[:motions] = group_i.motions
-    #     @activity[group_i.full_name] = h #store all this in the activity hash
-    #   end
+        #create some motions
+        motions = []
+        (0..rand(2)).each do |k|
+          a_motion = create_motion(discussion)
+          motions << a_motion
+        end
+        h[:motions] = motions
 
-    #   @since_time = Time.now - 5.hours
+        @activity[group_i.full_name] = h
+      end
 
-    #   addresses.each do |email|
-    #     user.email = email
-    #     UserMailer.daily_activity(user, @activity, @since_time).deliver
-    #     puts " ~ SENT (#{email})"
-    #   end
-    # end
+      @since_time = Time.now - 10.hours
+
+      addresses.each do |email|
+        user.stub email: email
+        Discussion.any_instance.stub number_of_comments_since: rand(13)
+        UserMailer.daily_activity(user, @activity, @since_time).deliver
+        puts " ~ SENT (#{email})"
+      end
+    end
 
     it "mentioned" do
       puts ' '
