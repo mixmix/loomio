@@ -1,13 +1,24 @@
 - unless can? :add_members, group
-  - if not group.users_include?(current_user) || current_user.nil?
+
+  -if current_user.nil?
     #request-membership
-      - membership_request = group.membership_requests.find_by_user_id(current_user)
-      - if membership_request.present?
-        = link_to t(:membership_requested), cancel_request_for_group_membership_path(group), method: :delete,
-          confirm: t(:confirm_remove_membership_request),
-          class: "btn", id: "membership-requested"
-      - else
-        - if group.parent.nil? || current_user.group_membership(group.parent)
-          =form_for(Membership.new, url: group_memberships_path(group)) do |f|
-            %input{name: "membership[group_id]", type: :hidden, value: group.id}
-              =submit_tag t(:request_membership), class: "btn"
+      not signed in
+      = simple_form_for membership_request, :validate => true do |f|
+        request membership
+        = f.input :full_name, hint: 'full name'
+        = f.input :email, hint: 'email'
+        = f.button :submit
+  -elsif not group.users_include?(current_user)
+    #request-membership
+      / existing system: signed in but not in group
+      - if not group.users_include?(current_user) || current_user.nil?
+        - membership_request = group.membership_requests.find_by_user_id(current_user)
+        - if membership_request.present?
+          = link_to t(:membership_requested), cancel_request_for_group_membership_path(group), method: :delete,
+            confirm: t(:confirm_remove_membership_request),
+            class: "btn", id: "membership-requested"
+        - else
+          - if group.parent.nil? || current_user.group_membership(group.parent)
+            =form_for(Membership.new, url: group_memberships_path(group)) do |f|
+              %input{name: "membership[group_id]", type: :hidden, value: group.id}
+                =submit_tag t(:request_membership), class: "btn"

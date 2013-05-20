@@ -1,6 +1,7 @@
 ActiveAdmin.register Group do
   actions :index, :show, :edit
   before_filter :set_pagination
+  filter :creator
   filter :name
   filter :parent
 
