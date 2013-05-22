@@ -2,10 +2,10 @@
 
   -if current_user.nil?
     #request-membership
-      not signed in
+      Request Membership
       = simple_form_for membership_request, :validate => true do |f|
         request membership
-        = f.input :full_name, hint: 'full name'
+        = f.input :name, hint: 'full name'
         = f.input :email, hint: 'email'
         = f.button :submit
   -elsif not group.users_include?(current_user)
