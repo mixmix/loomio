@@ -5,7 +5,8 @@ Given /^I am viewing a discussion titled "(.*?)" in "(.*?)"$/ do |disc_title, gr
 end
 
 When /^I choose to create a discussion$/ do
-  click_link 'Start a discussion'
+  # click_link 'Start a discussion'
+  click_on 'start-new-discussion'
 end
 
 When /^I select the group from the groups dropdown$/ do
