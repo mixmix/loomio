@@ -31,6 +31,13 @@ body.discussions.new, body.discussions.create {
 }
 #start-proposal-text { padding: 4px; }
 
+.see-more {
+  font-size: $font-small;
+  position: relative;
+  bottom: 10px;
+  display: block;
+}
+
 .model-description { padding-bottom: 10px; }
 
 body.discussions.show {
@@ -39,8 +46,6 @@ body.discussions.show {
     margin-bottom: 10px;
   }
 }
-.long-description { padding-bottom: 10px; }
-
 .revision-title p { font-size: 85%; }
 
 #description-edit-form {
@@ -91,7 +96,7 @@ body.discussions.show {
   .discussion-title-container{
     display: inline-block;
     width: 850px;
-    margin: 0 0 0 15px;
+    margin: 0 0 0px 15px;
   }
   #edit-discussion-title {
     float: left;
@@ -148,8 +153,8 @@ body.discussions.show {
   .discussion-additional-info {
     font-size: $font-smaller;
     color: $mid-grey;
-    max-width: 190px;
     float: right;
+    max-width: 190px;
   }
 
   .header-text {
@@ -208,7 +213,7 @@ li s hard.motion-preview {
   /* Markdown styling */
 
 .activity-item-body .popover h3 { padding: 8px 14px; }
-.activity-item-body, .long-description, .motion .description {
+.activity-item-body, .model-description, .motion .description {
   p {
     word-wrap: break-word;
   }
@@ -322,20 +327,24 @@ pre{
       margin-left: 45px; /*check this still works*/
     }
     .activity-icon {
-      margin-left: -26px;
+      margin-left: -25px;
     }
     .divider {
       border-bottom: 1px solid $light-grey;
       margin: 0 0 5px 45px;
     }
     .activity-item-container {
-      width: 100%;
       margin-top: 8px;
+      width: 100%;
     }
     .activity-item-body {
       margin-left: 45px;
       border-bottom: 1px solid $lighter-grey;
       padding-bottom: 9px;
+    }
+    .activity-item-actor{
+      font-weight: bold;
+      a {color: $dark-grey;}
     }
     .activity-item-avatar {
       height: 35px;
@@ -343,37 +352,33 @@ pre{
       float: left;
     }
     .activity-item-comment-actor{
-      font-weight: bold;
       float: left;
-      margin-right: 8px;
-    }
-    .activity-item-actor{
       font-weight: bold;
-      a {color: $dark-grey;}
-    }
-    .activity-item-header{
-      p {
-        color: black;
-        &:last-child {
-          margin-bottom: 2px;
-        }
-      }
+      margin-right: 8px;
     }
     .activity-item-content{
       color: $mid-grey;
       font-style: italic;
       word-wrap: break-word;
     }
-    .activity-item-time {
-      color: $mid-grey;
-      font-size: $font-tiny;
-      a {
-        color: $mid-grey;
+    .activity-item-header{
+      p {
+        color: black;
+        &:last-child{
+          margin-bottom: 2px;
+        }
       }
     }
     .activity-item-likes{
       color: $dark-grey;
       font-size: $font-tiny;
+    }
+    .activity-item-time{
+      color: $mid-grey;
+      font-size: $font-tiny;
+      a{
+        color: $mid-grey;
+      }
     }
   }
 }
@@ -394,7 +399,7 @@ pre{
 
 .popover-motion-name { color: black; }
 .popover-content { padding-top: 8px; }
-.popover-close-date {
+.popover-close-date { 
   font-weight: normal;
   display: inline;
   font-size: $font-tiny;
@@ -422,7 +427,7 @@ li.selector-item .discussion-preview:hover {
 
 .discussion-preview {
   float: left;
-  width: 700px;
+  width: 620px;
   height: 47px;
   background-color: $unhighlighted;
   a {
@@ -432,7 +437,7 @@ li.selector-item .discussion-preview:hover {
     text-decoration: none;
   }
   a.selector-discussion-link {
-    width: 653px;
+    width: 573px;
     float: left;
     padding: 5px 0 5px 5px;
   }
@@ -463,7 +468,7 @@ li.selector-item .discussion-preview:hover {
   .group-name {
     font-size: $font-small;
     color: $mid-grey;
-    width: 460px;
+    width: 340px;
   }
   .discussion-date-info {
     display: inline;
@@ -490,7 +495,8 @@ li.selector-item .discussion-preview:hover {
     margin: 8px 6px 0 0;
   }
   .pie-icon.activity-icon {
-    margin: 10px 5px 0 0; }
+    margin: 10px 10px 0 0;
+  }
   .activity-count {
     font-size: $font-tinywiny;
     position: relative;
