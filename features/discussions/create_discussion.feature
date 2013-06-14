@@ -8,7 +8,6 @@ Feature: User creates discussion
     And I am a member of a group
     And my global markdown preference is 'disabled'
 
-  @javascript
   Scenario: Group member creates discussion from group page
     When I visit the group page
     And I choose to create a discussion
@@ -19,10 +18,8 @@ Feature: User creates discussion
     And the discussion desription should render markdown
     And my global markdown preference should now be 'enabled'
 
-  @javascript
   Scenario: Group member creates discussion from dashboard
     When I visit the dashboard
-    And screenshot
     And I choose to create a discussion
     And I select the group from the groups dropdown
     And I fill in the discussion details and submit the form
