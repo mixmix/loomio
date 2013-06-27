@@ -84,25 +84,22 @@ describe Discussion do
     before do
       @discussion = create :discussion
     end
-    it "should retuen true if user is logged out" do
+
+    it "should return true if user is logged out" do
       @discussion.never_read_by(@user).should == true
     end
+
     it "returns true if dicussion has never been read" do
       @user = create :user
       @discussion.stub(:read_log_for).with(@user).and_return(nil)
       @discussion.never_read_by(@user).should == true
-    end
-    it "returns false if user has visited the discussion page" do
-      @user = create :user
-      @discussion.stub(:read_log_for).with(@user).and_return(true)
-      @discussion.never_read_by(@user).should == false
     end
   end
 
   describe "#activity" do
     it "returns all the activity for the discussion" do
       @user = create :user
-      @group = create :group 
+      @group = create :group
       @group.add_member! @user
       @discussion = create :discussion, :group => @group
       @discussion.add_comment(@user, "this is a test comment", false)
@@ -112,6 +109,33 @@ describe Discussion do
       activity[0].kind.should == 'new_vote'
       activity[1].kind.should == 'new_motion'
       activity[2].kind.should == 'new_comment'
+    end
+  end
+
+  describe "#filtered_activity" do
+    before do
+      @user = create :user
+      @group = create :group
+      @group.add_member! @user
+      @discussion = create :discussion, :group => @group
+      @discussion.set_description!("describy", false, @user)
+      @discussion.set_description!("describe", false, @user)
+      @discussion.add_comment(@user, "this is a test comment", false)
+    end
+    context "there are duplicate events" do
+      it "keeps them in the activity list" do
+        activity = @discussion.activity
+        activity[0].kind.should == 'new_comment'
+        activity[1].kind.should == 'discussion_description_edited'
+        activity[2].kind.should == 'discussion_description_edited'
+        activity[3].kind.should == 'new_discussion'
+      end
+      it "removes them from the filtered_activity list" do
+        filtered_activity = @discussion.filtered_activity
+        filtered_activity[0].kind.should == 'new_comment'
+        filtered_activity[1].kind.should == 'discussion_description_edited'
+        filtered_activity[2].kind.should == 'new_discussion'
+      end
     end
   end
 
@@ -254,7 +278,7 @@ describe Discussion do
         @discussion.stub(:last_looked_at_by).with(@user).and_return(nil)
         @discussion.stub_chain(:comments, :count).and_return(5)
 
-        @discussion.number_of_comments_since_last_looked(@user).should == 5
+        @discussion.number_of_comments_since_last_looked(@user).should == 6
       end
       it "returns the number of votes since the user last looked at the motion" do
         last_viewed_at = Time.now
@@ -274,7 +298,11 @@ describe Discussion do
     end
   end
 
-  describe "destroying discussion" do
-    it "destroys associated comments"
+  describe "#delayed_destroy" do
+    it 'sets deleted_at before calling destroy' do
+      @discussion = create(:discussion)
+      @discussion.should_receive(:is_deleted=).with(true)
+      @discussion.delayed_destroy
+    end
   end
 end

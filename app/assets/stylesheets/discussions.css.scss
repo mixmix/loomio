@@ -197,7 +197,6 @@ body.discussions.show {
       word-wrap: normal;
     }
     ul#activity-list {
-      border-top: 1px solid $lighter-grey;
       list-style: none;
       margin: 0 15px 3px 0;
       padding-top: 3px;
@@ -206,8 +205,8 @@ body.discussions.show {
         margin-left: 45px; /*check this still works*/
       }
       .divider {
-        border-bottom: 1px solid $light-grey;
-        margin: 0 0 5px 45px;
+        border-bottom: 1px solid $lighter-grey;
+        margin: 0 0 13px 0px;
       }
       .activity-icon {margin-left: -26px;}
       .activity-item-actor{
@@ -280,7 +279,7 @@ body.discussions.show {
   }
 
   .user-name {
-    &:link, &:visited{color: $mid-grey;}
+    &:link, &:visited{ color: $dark-grey;}
   }
 }
 

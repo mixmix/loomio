@@ -5,7 +5,7 @@ body.dashboard {
     .sub-panel ul {
       a:hover { color: $dark-grey }
       li { line-height: 21px; }
-      .sub-group a { padding-left: 20px; }
+      .sub-group .group-link-name { padding-left: 20px; }
     }
   }
 }

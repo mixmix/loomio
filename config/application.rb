@@ -21,7 +21,7 @@ module Loomio
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += %W(#{config.root}/extras #{config.root}/app/forms)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -61,6 +61,6 @@ module Loomio
     # Enable roadie (email css-->inline style gem)
     config.roadie.enable = true
 
-    config.assets.precompile += %w(active_admin.css active_admin.js frontpage.js frontpage.css active_admin/print.css)
+    config.assets.precompile += %w(active_admin.css active_admin.js frontpage.js frontpage.css active_admin/print.css load_metrics_listener.js)
   end
 end

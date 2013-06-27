@@ -1,4 +1,5 @@
 class Discussion < ActiveRecord::Base
+  default_scope -> {where(is_deleted: false)}
   scope :active_since, lambda {|some_time| where('created_at >= ? or last_comment_at >= ?', some_time, some_time)}
 
   validates_presence_of :title, :group, :author
@@ -61,14 +62,27 @@ class Discussion < ActiveRecord::Base
   end
 
   def never_read_by(user)
-    (user.nil? || read_log_for(user).nil?)
+    if user.nil?
+      true
+    elsif read_log_for(user).nil?
+      true
+    elsif read_log_for(user).discussion_last_viewed_at.nil?
+      true
+    end
   end
 
   def number_of_comments_since_last_looked(user)
     if user
-      return number_of_comments_since(last_looked_at_by(user)) if last_looked_at_by(user)
+      last_seen = last_looked_at_by(user)
+      if last_seen.nil?
+        # include the discussion in the count
+        comments.count + 1
+      else
+        number_of_comments_since(last_seen)
+      end
+    else
+      comments.count
     end
-    comments.count
   end
 
   def update_total_views
@@ -117,6 +131,16 @@ class Discussion < ActiveRecord::Base
     Event.includes(:eventable).where("discussion_id = ?", id).order('created_at DESC')
   end
 
+  def filtered_activity
+    filtered_activity = []
+    previous_event = activity.first
+    activity.reverse.each do |event|
+      filtered_activity << event unless event.is_repetition_of?(previous_event)
+      previous_event = event
+    end
+    filtered_activity.reverse
+  end
+
   def participants
     included_participants = users_with_comments.all
     included_participants << author
@@ -151,6 +175,11 @@ class Discussion < ActiveRecord::Base
     self.title = title
     save!
     fire_edit_title_event(user)
+  end
+
+  def delayed_destroy
+    self.update_attribute(:is_deleted, true)
+    self.delay.destroy
   end
 
   private

@@ -1,6 +1,6 @@
 class DiscussionsController < GroupBaseController
   inherit_resources
-  load_and_authorize_resource :except => [:show, :new, :create, :index]
+  load_and_authorize_resource :except => [:show, :new, :create, :index, :activity_counts]
   before_filter :authenticate_user!, :except => [:show, :index]
   before_filter :check_group_read_permissions, :only => :show
   after_filter :store_location, :only => :show
@@ -34,7 +34,7 @@ class DiscussionsController < GroupBaseController
 
   def destroy
     @discussion = Discussion.find(params[:id])
-    @discussion.delay.destroy
+    @discussion.delayed_destroy
     flash[:success] = t("success.discussion_deleted")
     redirect_to @discussion.group
   end
@@ -65,6 +65,7 @@ class DiscussionsController < GroupBaseController
     @vote = Vote.new
     @current_motion = @discussion.current_motion
     @activity = @discussion.activity
+    @filtered_activity = @discussion.filtered_activity
     assign_meta_data
     if params[:proposal]
       @displayed_motion = Motion.find(params[:proposal])
@@ -160,6 +161,15 @@ class DiscussionsController < GroupBaseController
     redirect_to @version.reify()
   end
 
+  def activity_counts
+    # this ensures that you can't ask for comment counts for discussions you dont belong to 
+    discussion_ids = current_user.discussion_ids & params[:discussion_ids].split('x').map(&:to_i)
+
+    counts = Discussion.find(discussion_ids).map do |discussion|
+      discussion.number_of_comments_since_last_looked(current_user)
+    end
+    render json: counts
+  end
 
   private
 

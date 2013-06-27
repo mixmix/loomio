@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130611033610) do
+ActiveRecord::Schema.define(:version => 20130625050817) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
     t.integer  "author_id"
     t.string   "author_type"
     t.text     "body"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "namespace"
   end
 
@@ -69,8 +69,8 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
   create_table "comment_votes", :force => true do |t|
     t.integer  "comment_id"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "comment_votes", ["comment_id"], :name => "index_comment_votes_on_comment_id"
@@ -86,8 +86,8 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "uses_markdown",       :default => false, :null => false
     t.integer  "comment_votes_count", :default => 0,     :null => false
   end
@@ -95,6 +95,15 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
   add_index "comments", ["parent_id"], :name => "index_comments_on_parent_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "contributions", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "identifier_id"
+    t.string   "response_code"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.text     "params"
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -115,8 +124,8 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
   create_table "did_not_votes", :force => true do |t|
     t.integer  "user_id"
     t.integer  "motion_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "did_not_votes", ["motion_id"], :name => "index_did_not_votes_on_motion_id"
@@ -124,10 +133,11 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
 
   create_table "discussion_read_logs", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "discussion_id"
     t.datetime "discussion_last_viewed_at"
+    t.boolean  "following",                 :default => true, :null => false
   end
 
   add_index "discussion_read_logs", ["discussion_id"], :name => "index_motion_read_logs_on_discussion_id"
@@ -137,22 +147,24 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
   create_table "discussions", :force => true do |t|
     t.integer  "group_id"
     t.integer  "author_id"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "title"
     t.datetime "last_comment_at"
     t.text     "description"
-    t.boolean  "uses_markdown",   :default => true, :null => false
-    t.integer  "total_views",     :default => 0,    :null => false
+    t.boolean  "uses_markdown",   :default => true,  :null => false
+    t.integer  "total_views",     :default => 0,     :null => false
+    t.boolean  "is_deleted",      :default => false, :null => false
   end
 
   add_index "discussions", ["author_id"], :name => "index_discussions_on_author_id"
   add_index "discussions", ["group_id"], :name => "index_discussions_on_group_id"
+  add_index "discussions", ["is_deleted"], :name => "index_discussions_on_is_deleted"
 
   create_table "events", :force => true do |t|
     t.string   "kind"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "eventable_id"
     t.string   "eventable_type"
     t.integer  "user_id"
@@ -173,7 +185,7 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
     t.integer  "group_id"
     t.boolean  "cannot_contribute"
     t.string   "expected_size"
-    t.integer  "max_size",            :default => 50
+    t.integer  "max_size",            :default => 300
     t.string   "robot_trap"
     t.integer  "distribution_metric"
     t.string   "sectors"
@@ -215,8 +227,8 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
 
   create_table "groups", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "viewable_by"
     t.string   "members_invitable_by"
     t.integer  "parent_id"
@@ -224,8 +236,8 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
     t.boolean  "hide_members",         :default => false
     t.boolean  "beta_features",        :default => false
     t.text     "description"
-    t.datetime "archived_at"
     t.integer  "memberships_count",    :default => 0,     :null => false
+    t.datetime "archived_at"
     t.integer  "max_size"
     t.boolean  "cannot_contribute",    :default => false
     t.integer  "distribution_metric"
@@ -236,8 +248,12 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
     t.string   "country_name"
     t.datetime "setup_completed_at"
     t.boolean  "next_steps_completed", :default => false, :null => false
+    t.string   "full_name"
+    t.boolean  "paying_subscription",  :default => false, :null => false
   end
 
+  add_index "groups", ["full_name"], :name => "index_groups_on_full_name"
+  add_index "groups", ["name"], :name => "index_groups_on_name"
   add_index "groups", ["parent_id"], :name => "index_groups_on_parent_id"
 
   create_table "invitations", :force => true do |t|
@@ -256,35 +272,17 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
   add_index "invitations", ["group_id"], :name => "index_invitations_on_group_id"
   add_index "invitations", ["token"], :name => "index_invitations_on_token"
 
-  create_table "membership_requests", :force => true do |t|
-    t.string   "name"
-    t.string   "email"
-    t.text     "introduction"
-    t.integer  "group_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-    t.integer  "requestor_id"
-    t.integer  "responder_id"
-    t.string   "response"
-    t.datetime "responded_at"
-  end
-
-  add_index "membership_requests", ["email"], :name => "index_membership_requests_on_email"
-  add_index "membership_requests", ["group_id"], :name => "index_membership_requests_on_group_id"
-  add_index "membership_requests", ["name"], :name => "index_membership_requests_on_name"
-  add_index "membership_requests", ["requestor_id"], :name => "index_membership_requests_on_requestor_id"
-  add_index "membership_requests", ["responder_id"], :name => "index_membership_requests_on_responder_id"
-  add_index "membership_requests", ["response"], :name => "index_membership_requests_on_response"
-
   create_table "memberships", :force => true do |t|
     t.integer  "group_id"
     t.integer  "user_id"
-    t.datetime "created_at",                                          :null => false
-    t.datetime "updated_at",                                          :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "access_level"
     t.integer  "inviter_id"
     t.datetime "group_last_viewed_at",                                :null => false
     t.boolean  "subscribed_to_notification_emails", :default => true
+    t.datetime "archived_at"
+    t.integer  "inbox_position",                    :default => 0
   end
 
   add_index "memberships", ["group_id"], :name => "index_memberships_on_group_id"
@@ -294,8 +292,8 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
   create_table "motion_read_logs", :force => true do |t|
     t.integer  "motion_id"
     t.integer  "user_id"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "motion_last_viewed_at"
   end
 
@@ -303,18 +301,22 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
     t.string   "name"
     t.text     "description"
     t.integer  "author_id"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
-    t.string   "phase",              :default => "voting", :null => false
-    t.string   "discussion_url",     :default => "",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "phase",               :default => "voting", :null => false
+    t.string   "discussion_url",      :default => "",       :null => false
     t.datetime "close_at"
     t.integer  "discussion_id"
     t.string   "outcome"
     t.datetime "last_vote_at"
-    t.boolean  "uses_markdown",      :default => true,     :null => false
+    t.boolean  "uses_markdown",       :default => true,     :null => false
     t.date     "close_at_date"
     t.string   "close_at_time"
     t.string   "close_at_time_zone"
+    t.integer  "yes_votes_count",     :default => 0,        :null => false
+    t.integer  "no_votes_count",      :default => 0,        :null => false
+    t.integer  "abstain_votes_count", :default => 0,        :null => false
+    t.integer  "block_votes_count",   :default => 0,        :null => false
   end
 
   add_index "motions", ["author_id"], :name => "index_motions_on_author_id"
@@ -322,8 +324,8 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
 
   create_table "notifications", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "event_id"
     t.datetime "viewed_at"
   end
@@ -332,18 +334,18 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
   add_index "notifications", ["user_id"], :name => "index_notifications_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                                      :default => "",         :null => false
-    t.string   "encrypted_password",                                         :default => ""
+    t.string   "email",                                                       :default => "",         :null => false
+    t.string   "encrypted_password",                           :limit => 128, :default => ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                                              :default => 0
+    t.integer  "sign_in_count",                                               :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                                                         :null => false
-    t.datetime "updated_at",                                                                         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "name"
     t.string   "unconfirmed_email"
     t.string   "invitation_token",                             :limit => 60
@@ -353,22 +355,22 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.datetime "deleted_at"
-    t.string   "avatar_kind",                                                :default => "initials", :null => false
+    t.boolean  "has_read_system_notice",                                      :default => false,      :null => false
+    t.boolean  "is_admin",                                                    :default => false
+    t.string   "avatar_kind",                                                 :default => "initials", :null => false
     t.string   "uploaded_avatar_file_name"
     t.string   "uploaded_avatar_content_type"
     t.integer  "uploaded_avatar_file_size"
     t.datetime "uploaded_avatar_updated_at"
-    t.boolean  "has_read_system_notice",                                     :default => false,      :null => false
-    t.boolean  "is_admin",                                                   :default => false
     t.string   "avatar_initials"
     t.string   "username"
-    t.boolean  "subscribed_to_daily_activity_email",                         :default => false,      :null => false
-    t.boolean  "subscribed_to_mention_notifications",                        :default => true,       :null => false
-    t.boolean  "subscribed_to_proposal_closure_notifications",               :default => true,       :null => false
+    t.boolean  "subscribed_to_daily_activity_email",                          :default => false,      :null => false
+    t.boolean  "subscribed_to_mention_notifications",                         :default => true,       :null => false
+    t.boolean  "subscribed_to_proposal_closure_notifications",                :default => true,       :null => false
     t.string   "authentication_token"
     t.string   "unsubscribe_token"
-    t.integer  "memberships_count",                                          :default => 0,          :null => false
-    t.boolean  "uses_markdown",                                              :default => false
+    t.integer  "memberships_count",                                           :default => 0,          :null => false
+    t.boolean  "uses_markdown",                                               :default => false
     t.string   "language_preference"
     t.string   "time_zone"
   end
@@ -394,8 +396,8 @@ ActiveRecord::Schema.define(:version => 20130611033610) do
     t.integer  "motion_id"
     t.integer  "user_id"
     t.string   "position"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "statement"
   end
 
