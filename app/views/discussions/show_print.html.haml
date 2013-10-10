@@ -1,0 +1,43 @@
+- set_title @group.name, @discussion.title, @group.parent
+= render 'title', discussion: @discussion
+= render '/groups/title', group: @group
+.row
+  .span8
+    = render 'description', discussion: @discussion, description: @discussion.description, description_markdown_setting: @discussion.uses_markdown
+  .span8
+    = t("discussion_context.started_html_print",
+    when: @discussion.created_at.to_date,
+    who: @discussion.author.name,
+    link: user_path(@discussion.author),
+    link_class: 'user-name')
+    - if @last_collaborator.present?
+      .last-edited-by
+        = t("discussion_context.last_edited_html_print",
+        when: @discussion.last_versioned_at.to_date,
+        who: @last_collaborator.name,
+        link: user_path(@last_collaborator),
+        link_class: 'user-name')
+  .span8
+    .large-icon.discussion-icon.enabled-icon
+    %h3.header-text
+      = t :discussion
+    #discussion-activity-body
+      #activity-feed
+        = render 'activity', items: @activity
+  #content-proposal.span6
+    .large-icon.decision-icon
+    %h3.header-text
+      = t :current_decision
+    .content-proposal-body
+      %ul.selector-list
+    - if @discussion.closed_motions.present?
+      #previous-proposals
+        .clearfix
+          .large-icon.decision-icon
+          %h3.header-text
+            = t :previous_decisions
+        .content-proposal-body
+          %ul.selector-list
+          - @discussion.motions.each do |motion|
+            %li.selector-item
+              = render motion, this_group: @group

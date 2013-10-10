@@ -92,6 +92,7 @@ Loomio::Application.routes.draw do
       post :add_comment
       post :show_description_history
       get :new_proposal
+      get :show_print
       post :edit_title
       put :move
     end
